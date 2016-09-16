@@ -146,5 +146,26 @@ from numpy.random import rand
 
 # print dframe.ix[['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],columns]
 
+#Lecture 5
+#Drop Entry from Series and DF
+ser1 = Series(np.arange(3),index=['a','b','c'])
+print ser1
 
+#to drop a index
+ser1.drop('b')
+print ser1
 
+dframe1 = DataFrame(np.arange(9).reshape(3,3),index=['SF','LA','NY'],columns=['Pop','Size','Year'])
+print dframe1
+
+dframe1.drop('LA')
+print dframe1
+#To drop it permanently move it to another variable else the orginal DF will retains it row
+dframe2 = dframe1.drop('LA')
+print dframe2
+#by default drop user axis 0 that is row, for column you have to specify
+#axis mandatorily.
+# To drop columns
+dframe1.drop('year',axis=1)
+
+#Lecture 6
