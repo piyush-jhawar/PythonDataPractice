@@ -1,3 +1,9 @@
+import numpy as np
+import pandas as pd
+from pandas import  Series, DataFrame
+import webbrowser
+
+
 # import numpy as np
 # import pandas as pd
 # from pandas import Series,DataFrame
@@ -15,10 +21,7 @@
 # #to turn Series into Dictionary .to_dict()
 
 
-import numpy as np
-import pandas as pd
-from pandas import  Series, DataFrame
-import webbrowser
+
 # https://en.wikipedia.org/wiki/NFL_win%E2%80%93loss_records
 
 # obj = Series([3,6,9,12])
@@ -65,7 +68,7 @@ import webbrowser
 # website = 'https://en.wikipedia.org/wiki/NFL_win%E2%80%93loss_records'
 # # webbrowser.open(website)
 #
-#nfl_frame = pd.read_clipboard()
+nfl_frame = pd.read_clipboard()
 # print nfl_frame
 #
 # # print nfl_frame.columns
@@ -98,3 +101,7 @@ import webbrowser
 #
 # city_frame = DataFrame(data)
 # print city_frame
+print nfl_frame.iloc[0]
+print nfl_frame[0:1] #to fetch zeroth position index
+
+#Lecture 3
