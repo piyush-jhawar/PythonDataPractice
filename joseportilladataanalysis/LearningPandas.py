@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from pandas import  Series, DataFrame
 import webbrowser
+from numpy.random import rand
 
 
 # import numpy as np
@@ -68,7 +69,7 @@ import webbrowser
 # website = 'https://en.wikipedia.org/wiki/NFL_win%E2%80%93loss_records'
 # # webbrowser.open(website)
 #
-nfl_frame = pd.read_clipboard()
+# nfl_frame = pd.read_clipboard()
 # print nfl_frame
 #
 # # print nfl_frame.columns
@@ -101,7 +102,49 @@ nfl_frame = pd.read_clipboard()
 #
 # city_frame = DataFrame(data)
 # print city_frame
-print nfl_frame.iloc[0]
-print nfl_frame[0:1] #to fetch zeroth position index
+# print nfl_frame.iloc[0]
+# print nfl_frame[0:1] #to fetch zeroth position index
 
 #Lecture 3
+# my_ser = Series([1,2,3,4],index=['A','B','C','D'])
+# print my_ser
+#
+# my_index = my_ser.index
+# print my_index[2:]
+#my_index[0] = 'Z'#cannot be performed
+
+
+#Lecture 4
+#Re-indexing
+
+# ser1 = Series([1,2,3,4],index=['A','B','C','D'])
+# print ser1
+# ser2 = ser1.reindex(['A','B','C','D','E','F'])
+#
+# # print ser2
+#
+# ser2.reindex(['A','B','C','E','F','G'],fill_value=0)
+# print ser2.index
+
+# ser3 = Series(['USA','Mexico','Canada'],index=[0,5,10])
+# print ser3
+#
+# ser3.reindex(range(15),method='ffill')#fffil will fill usa for 1234,
+# # and ffill will fill Canada for 6,7,8,9 same continues.
+# print ser3
+#
+# dframe = DataFrame(rand(25).reshape((5,5)),index=['A','B','D','E','F'],
+#                    columns=['Col1','Col2','Col3','Col4','Col5'])
+# print dframe
+#
+# dframe2 = dframe.reindex(['A','B','C','D','E','F'])
+# print dframe2
+#
+# columns = ['Col1','Col2','Col3','Col4','Col5','Col6']
+# dframe2.reindex(columns=new_columns)
+# print dframe2
+
+# print dframe.ix[['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],columns]
+
+
+
