@@ -341,6 +341,18 @@ dframe = DataFrame(data['diet'])
 url = 'http://www.fdic.gov/bank/individual/failed/banklist.html'
 
 dframe_list = pd.io.html.read_html(url)
-print dframe_list
-dframe = dframe_list
-# print dframe
+dframe = dframe_list[0]
+# print dframe.columns.values
+
+#Lecture 4
+#Working with Excel
+
+
+xlsfile = pd.ExcelFile('lec_28_test.xlsx')
+dframe = xlsfile.parse('Sheet1')
+print dframe
+
+#Section 6
+#Lecture 1
+#Merge
+
