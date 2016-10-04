@@ -8,6 +8,9 @@ from pandas_datareader import data,wb
 import datetime
 from matplotlib import pyplot as plt
 import seaborn as sns
+import sys
+import json
+from pandas import read_html
 
 
 # import numpy as np
@@ -297,7 +300,47 @@ dframe = ser.unstack()
 #Section  5
 #Lecture 1
 #Reading and Writing Text Files
-dframe = pd.read_csv('lec25.csv')
-print dframe
+dframe = pd.read_csv('lec25.csv',header=None)
+# print dframe
 
 
+dframe = pd.read_table('lec25.csv',sep=',',header=None)
+# print dframe
+
+dframe = pd.read_csv('lec25.csv',header=None,nrows=2)
+# print dframe
+dframe.to_csv('mytextdata_out.csv')
+# dframe.to_csv(sys.stdout)
+
+# dframe.to_csv(sys.stdout,sep='_')#sep='; or ? or |'
+
+# dframe.to_csv(sys.stdout,columns=[0,1,2])
+
+#Lecture 2
+#Reading and writing JSON
+
+json_obj = """
+{   "zoo_animal": "Lion",
+    "food": ["Meat", "Veggies", "Honey"],
+    "fur": "Golden",
+    "clothes": null,
+    "diet": [{"zoo_animal": "Gazelle", "food":"grass", "fur": "Brown"}]
+}
+"""
+
+data = json.loads(json_obj)
+# print data
+# print json.dumps(data)
+
+dframe = DataFrame(data['diet'])
+# print dframe
+
+#Lecture 3
+#HTML with Pandas
+
+url = 'http://www.fdic.gov/bank/individual/failed/banklist.html'
+
+dframe_list = pd.io.html.read_html(url)
+print dframe_list
+dframe = dframe_list
+# print dframe
