@@ -11,6 +11,7 @@ import seaborn as sns
 import sys
 import json
 from pandas import read_html
+import pandas.util.testing as tm; tm.N = 3
 
 
 # # import numpy as np
@@ -463,7 +464,7 @@ dframe_evens = DataFrame({'X': [2., 4., nan, 6., 8.],
 dframe1 = DataFrame(np.arange(8).reshape((2, 4)),
                  index=pd.Index(['LA', 'SF'], name='city'),
                  columns=pd.Index(['A', 'B', 'C','D'], name='letter'))
-print dframe1
+# print dframe1
 
 dframe_st = dframe1.stack()
 # print dframe_st
@@ -476,13 +477,127 @@ ser1 = Series([0,1,2], index=['Q','X','Y'])
 ser2 = Series([4,5,6], index=['X','Y','Z'])
 
 dframe = pd.concat([ser1,ser2],keys=['Alpha','Beta'])
-print dframe
+# print dframe
 
-print dframe.unstack()
+# print dframe.unstack()
 dframe = dframe.unstack()
-print dframe
-print dframe.stack(dropna=False)
+# print dframe
+# print dframe.stack(dropna=False)
+
+#Lecture 6
+#Pivoting
+
+def unpivot(frame):
+    N, K = frame.shape
+
+    data = {'value': frame.values.ravel('F'),
+            'variable': np.asarray(frame.columns).repeat(N),
+            'date': np.tile(np.asarray(frame.index), K)}
+
+    # Return the DataFrame
+    return DataFrame(data, columns=['date', 'variable', 'value'])
+dframe = unpivot(tm.makeTimeDataFrame())
+# print dframe
+
+
+dframe_piv = dframe.pivot( 'date','variable','value')
+# print dframe_piv
+
+#Lecture 7
+#Duplicates in DataFrame
+dframe = DataFrame({'key1': ['A'] * 2 + ['B'] * 3,
+                  'key2': [2, 2, 2, 3, 3]})
+# print dframe
+# print dframe.duplicated()
+# print dframe.drop_duplicates()
+# print dframe.drop_duplicates(['key1'])
+# print dframe.drop_duplicates(['key1'],keep='last')
+
+#Lecture 8
+#Mapping in DataFrame
+
+dframe = DataFrame({'city':['Alma','Brian Head','Fox Park'],
+                    'altitude':[3158,3000,2762]})
+# print dframe
+state_map = {'Alma':'Colorado','Brian Head':'Utah','Fox Park':'Wyoming'}
+dframe['state'] = dframe['city'].map(state_map)
+# print dframe
+
+#Lecture 9
+#Replace value in DF
+
+ser1 = Series([1,2,3,4,1,2,3,4,4])
+# print ser1
+#
+# print ser1.replace(1,np.nan)
+# print ser1.replace([1,4],[100,400])
+# print ser1.replace({4:np.nan})
 
 
 
+#Lecture 10
+#Rename index in DF
 
+dframe= DataFrame(np.arange(12).reshape((3, 4)),
+                 index=['NY', 'LA', 'SF'],
+                 columns=['A', 'B', 'C', 'D'])
+# print dframe
+#
+# print dframe.index.map(str.lower)
+dframe.index = dframe.index.map(str.lower)
+# print dframe
+# print dframe.rename(index=str.title,columns=str.lower)
+# print dframe.rename(index={'ny': 'NEW YORK'},columns={'A': 'ALPHA'})
+dframe.rename(index={'ny': 'NEW YORK'}, inplace=True)
+
+# print dframe.rename(index={'ny': 'NEW YORK'},columns={'A': 'ALPHA'} ,inplace=True)
+# print dframe
+
+
+#Lecture 11
+#Binning
+years = [1990,1991,1992,2008,2012,2015,1987,1969,2013,2008,1999]
+decade_bins = [1960,1970,1980,1990,2000,2010,2020]
+decade_cat = pd.cut(years,decade_bins)
+# print decade_cat
+# print decade_cat.categories
+# print pd.value_counts(decade_cat)
+
+print pd.cut(years,2,precision=1)
+
+#Lecture 12
+#Outlier
+
+np.random.seed(12345)
+
+dframe = DataFrame(np.random.randn(1000,4))
+# print dframe.head()
+# print dframe.describe()
+col = dframe[0]
+# print col.head()
+# print col[np.abs(col>3)]
+# print dframe[np.abs(dframe>3).any(1)]
+dframe[np.abs(dframe)>3] = np.sign(dframe) * 3
+# print dframe.describe()
+
+#Lecture 13
+#Permutation
+
+dframe = DataFrame(np.arange(4 * 4).reshape((4, 4)))
+
+blender = np.random.permutation(4)
+print blender
+
+print dframe.take(blender)
+
+
+box = np.array([1,2,3])
+
+# Now lets create a random permuation WITH replacement using randint
+shaker = np.random.randint(0, len(box), size=10)
+print shaker
+
+hand_grabs = box.take(shaker)
+
+#show
+print hand_grabs
