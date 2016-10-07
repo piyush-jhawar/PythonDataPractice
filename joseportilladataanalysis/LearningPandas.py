@@ -563,7 +563,7 @@ decade_cat = pd.cut(years,decade_bins)
 # print decade_cat.categories
 # print pd.value_counts(decade_cat)
 
-print pd.cut(years,2,precision=1)
+# print pd.cut(years,2,precision=1)
 
 #Lecture 12
 #Outlier
@@ -586,18 +586,71 @@ dframe[np.abs(dframe)>3] = np.sign(dframe) * 3
 dframe = DataFrame(np.arange(4 * 4).reshape((4, 4)))
 
 blender = np.random.permutation(4)
-print blender
+# print blender
 
-print dframe.take(blender)
+# print dframe.take(blender)
 
 
 box = np.array([1,2,3])
 
 # Now lets create a random permuation WITH replacement using randint
 shaker = np.random.randint(0, len(box), size=10)
-print shaker
+# print shaker
 
 hand_grabs = box.take(shaker)
 
 #show
-print hand_grabs
+# print hand_grabs
+
+
+#Section 6
+#Lecture 1
+#Group by
+
+#Let's make a dframe
+dframe = DataFrame({'k1':['X','X','Y','Y','Z'],
+                    'k2':['alpha','beta','alpha','beta','alpha'],
+                    'dataset1':np.random.randn(5),
+                    'dataset2':np.random.randn(5)})
+print dframe
+group1 = dframe['dataset1'].groupby(dframe['k1'])
+# print group1.mean()
+
+cities = np.array(['NY','LA','LA','NY','NY'])
+month = np.array(['JAN','FEB','JAN','FEB','JAN'])
+
+# print dframe['dataset1'].groupby([cities,month]).mean()
+# print dframe.groupby('k1').mean()
+# print dframe.groupby(['k1','k2']).mean()
+# print dframe.groupby(['k1']).size()
+
+#
+# for name,group in dframe.groupby('k1'):
+#     print "This is the %s group name"%name
+#     print group
+#     print '\n'
+#
+# for (k1,k2),group in dframe.groupby(['k1','k2']):
+#     print "Key1 = %s Key2 = %s"%(k1,k2)
+#     print group
+#     print '\n'
+group_dict = dict(list(dframe.groupby('k1')))
+print "\n"
+# print group_dict['X']
+group_dict_axis1 = dict(list(dframe.groupby(dframe.dtypes,axis=1)))
+# print group_dict_axis1
+
+
+dataset2_group = dframe.groupby(['k1','k2'])[['dataset2']]
+
+print dataset2_group.mean()
+
+#Lecture 2
+
+# Let's make a Dframe
+
+animals = DataFrame(np.arange(16).reshape(4, 4),
+                   columns=['W', 'X', 'Y', 'Z'],
+                   index=['Dog', 'Cat', 'Bird', 'Mouse'])
+
+
